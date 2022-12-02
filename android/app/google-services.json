@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "133333730533",
+    "project_id": "truth-or-drink-920a3",
+    "storage_bucket": "truth-or-drink-920a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133333730533:android:6d9c412d155063c33d000c",
+        "android_client_info": {
+          "package_name": "com.example.truth_or_drink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133333730533-vd96ngmm7s6a17720brdk57t0gj85k0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkXAT9kWwdZ5EkrG7EKknYckIukHW0AWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "133333730533-vd96ngmm7s6a17720brdk57t0gj85k0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
