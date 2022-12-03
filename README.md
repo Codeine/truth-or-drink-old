@@ -1,6 +1,6 @@
 
 # Truth or Drink
-A new Flutter project for Mobile Applications (B2C4-2022). 
+A new Flutter project with Firebase as backend for Mobile Applications (B2C4-2022). 
 
 
 ## Authors
