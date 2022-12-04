@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:truth_or_drink/screens/email_verification_page.dart';
 import 'package:truth_or_drink/screens/forgotten_password_page.dart';
 import 'package:truth_or_drink/screens/login_page.dart';
+import 'package:truth_or_drink/screens/main_menu_page.dart';
 import 'package:truth_or_drink/screens/registration_page.dart';
 import 'firebase_options.dart';
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => RegistrationPage(),
         '/forgotten-password': (context) => ForgottenPasswordPage(),
         '/verify-email': (context) => EmailVerificationPage(),
+        '/main-menu': (context) => MainMenuPage(),
       },
     );
   }

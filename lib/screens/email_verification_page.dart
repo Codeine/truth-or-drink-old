@@ -7,6 +7,17 @@ class EmailVerificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool redirectCanceled = false;
+
+    // Simulate verification
+    Future.delayed(const Duration(seconds: 6), () {
+      if (!redirectCanceled) {
+        Navigator.pushReplacementNamed(context, '/main-menu');
+      } else {
+        print("CANCELED");
+      }
+    });
+
     return Base(
       child: Center(
         child: Column(
@@ -17,6 +28,7 @@ class EmailVerificationPage extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: BackButton(
                 onPressed: () {
+                  redirectCanceled = true;
                   Navigator.pop(context);
                 },
               ),

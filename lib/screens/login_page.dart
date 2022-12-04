@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   if (_formKey.currentState == null) return;
                   if (!_formKey.currentState!.validate()) return;
-                  print("Passed: login");
+                  Navigator.pushReplacementNamed(context, '/main-menu');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
