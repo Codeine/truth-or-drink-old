@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:truth_or_drink/screens/create_game_page.dart';
 import 'package:truth_or_drink/screens/email_verification_page.dart';
 import 'package:truth_or_drink/screens/forgotten_password_page.dart';
+import 'package:truth_or_drink/screens/game_page.dart';
 import 'package:truth_or_drink/screens/login_page.dart';
 import 'package:truth_or_drink/screens/main_menu_page.dart';
 import 'package:truth_or_drink/screens/manage_question_set_page.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/create-game': (context) => const CreateGamePage(),
         '/manage-questions': (context) => const ManageQuestionsPage(),
         '/manage-question-set': (context) => const ManageQuestionSetPage(),
+        '/game': (context) => const GamePage(),
       },
     );
   }

@@ -162,7 +162,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
                 onPressed: () {
-                  notifyNotImplemented(context);
+                  Navigator.pushReplacementNamed(context, '/game');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
