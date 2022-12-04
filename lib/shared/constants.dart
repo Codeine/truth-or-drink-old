@@ -61,3 +61,42 @@ class Logo extends StatelessWidget {
     );
   }
 }
+
+class TextDivider extends StatelessWidget {
+  const TextDivider({
+    super.key,
+    required this.text,
+    this.thickness = 1,
+    this.indent = 10,
+    this.endIndent = 10,
+  });
+  final Widget text;
+  final double thickness;
+  final double indent;
+  final double endIndent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Divider(
+            indent: indent,
+            endIndent: endIndent,
+            thickness: thickness,
+            color: Color.fromARGB(100, 45, 51, 58),
+          ),
+        ),
+        text,
+        Expanded(
+          child: Divider(
+            indent: endIndent,
+            endIndent: indent,
+            thickness: thickness,
+            color: Color.fromARGB(100, 45, 51, 58),
+          ),
+        ),
+      ],
+    );
+  }
+}

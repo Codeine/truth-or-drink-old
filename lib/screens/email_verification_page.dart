@@ -40,32 +40,14 @@ class EmailVerificationPage extends StatelessWidget {
               size: 50.0,
             ),
             const SizedBox(height: 40),
-            Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    indent: authHorizontalPadding,
-                    endIndent: 10.0,
-                    thickness: 1.0,
-                    color: Color.fromARGB(100, 45, 51, 58),
-                  ),
+            TextDivider(
+              text: Text(
+                'WHAT IS THIS?',
+                style: defaultFontStyle.copyWith(
+                  color: betterBlack.withAlpha(175),
                 ),
-                Text(
-                  'WHAT IS THIS?',
-                  style: defaultFontStyle.copyWith(
-                    fontSize: 14,
-                    color: Color.fromARGB(175, 45, 51, 58),
-                  ),
-                ),
-                Expanded(
-                  child: Divider(
-                    indent: 10.0,
-                    endIndent: authHorizontalPadding,
-                    thickness: 1,
-                    color: Color.fromARGB(100, 45, 51, 58),
-                  ),
-                ),
-              ],
+              ),
+              indent: authHorizontalPadding,
             ),
             const SizedBox(height: 10.0),
             Padding(

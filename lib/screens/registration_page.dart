@@ -102,32 +102,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             ),
             const SizedBox(height: 30.0),
-            Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    indent: authHorizontalPadding,
-                    endIndent: 10.0,
-                    thickness: 1.0,
-                    color: Color.fromARGB(100, 45, 51, 58),
-                  ),
+            TextDivider(
+              text: Text(
+                'OR',
+                style: defaultFontStyle.copyWith(
+                  color: betterBlack.withAlpha(175),
                 ),
-                Text(
-                  'OR',
-                  style: defaultFontStyle.copyWith(
-                    fontSize: 14,
-                    color: Color.fromARGB(175, 45, 51, 58),
-                  ),
-                ),
-                Expanded(
-                  child: Divider(
-                    indent: 10.0,
-                    endIndent: authHorizontalPadding,
-                    thickness: 1,
-                    color: Color.fromARGB(100, 45, 51, 58),
-                  ),
-                ),
-              ],
+              ),
+              indent: authHorizontalPadding,
             ),
             const SizedBox(height: 20),
             Padding(
