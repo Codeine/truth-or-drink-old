@@ -13,8 +13,6 @@ class EmailVerificationPage extends StatelessWidget {
     Future.delayed(const Duration(seconds: 6), () {
       if (!redirectCanceled) {
         Navigator.pushReplacementNamed(context, '/main-menu');
-      } else {
-        print("CANCELED");
       }
     });
 
