@@ -112,6 +112,7 @@ class _ForgottenPasswordPageState extends State<ForgottenPasswordPage> {
               child: Text(
                 'In case we find your account, we will send a password reset link to the email address you provided.',
                 style: defaultFontStyle,
+                textAlign: TextAlign.center,
               ),
             ),
           ],
