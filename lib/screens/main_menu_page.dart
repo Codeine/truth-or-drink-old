@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:truth_or_drink/shared/constants.dart';
-import 'package:truth_or_drink/shared/features.dart';
 
 class MainMenuPage extends StatelessWidget {
   const MainMenuPage({super.key});
@@ -50,7 +49,7 @@ class MainMenuPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
                 onPressed: () {
-                  notifyNotImplemented(context);
+                  Navigator.pushNamed(context, '/create-game');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
@@ -75,7 +74,7 @@ class MainMenuPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
                 onPressed: () {
-                  notifyNotImplemented(context);
+                  Navigator.pushNamed(context, '/manage-questions');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
