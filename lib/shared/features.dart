@@ -22,3 +22,27 @@ void notifyNotImplemented(context) {
         .then((reason) => canShowSnackbar = true);
   }
 }
+
+bool isValidEmail(String email) {
+  return RegExp(
+          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+      .hasMatch(email);
+}
+
+String? validateEmail(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Enter your email address';
+  } else if (!isValidEmail(value)) {
+    return 'Enter a valid email address';
+  }
+  return null;
+}
+
+String? validatePassword(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Enter your password';
+  } else if (value.length < 4) {
+    return 'Enter a valid password';
+  }
+  return null;
+}

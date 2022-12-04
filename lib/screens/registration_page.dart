@@ -10,6 +10,8 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Base(
@@ -32,40 +34,55 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                  hintStyle: defaultFontStyle.copyWith(
-                    color: betterBlack.withAlpha(150),
-                    fontSize: 14,
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: authHorizontalPadding),
+                    child: TextFormField(
+                      validator: validateEmail,
+                      decoration: InputDecoration(
+                        hintText: 'Email',
+                        hintStyle: defaultFontStyle.copyWith(
+                          color: betterBlack.withAlpha(150),
+                          fontSize: 14,
+                        ),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
                   ),
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
-              child: TextFormField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  suffixIcon: const Icon(Icons.visibility),
-                  hintText: 'Password',
-                  hintStyle: defaultFontStyle.copyWith(
-                    color: betterBlack.withAlpha(150),
-                    fontSize: 14,
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: authHorizontalPadding),
+                    child: TextFormField(
+                      validator: validatePassword,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        suffixIcon: const Icon(Icons.visibility),
+                        hintText: 'Password',
+                        hintStyle: defaultFontStyle.copyWith(
+                          color: betterBlack.withAlpha(150),
+                          fontSize: 14,
+                        ),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
                   ),
-                  border: const OutlineInputBorder(),
-                ),
+                ],
               ),
             ),
             const SizedBox(height: 15),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (_formKey.currentState == null) return;
+                  if (!_formKey.currentState!.validate()) return;
+                  print("Passed: registration");
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
                   shape: RoundedRectangleBorder(

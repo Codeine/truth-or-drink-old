@@ -57,7 +57,9 @@ class _ForgottenPasswordPageState extends State<ForgottenPasswordPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  notifyNotImplemented(context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
                   shape: RoundedRectangleBorder(
