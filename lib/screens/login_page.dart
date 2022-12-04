@@ -10,6 +10,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Base(
@@ -32,39 +34,54 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                  hintStyle: defaultFontStyle.copyWith(
-                    color: betterBlack.withAlpha(150),
-                    fontSize: 14,
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: authHorizontalPadding),
+                    child: TextFormField(
+                      validator: validateEmail,
+                      decoration: InputDecoration(
+                        hintText: 'Email',
+                        hintStyle: defaultFontStyle.copyWith(
+                          color: betterBlack.withAlpha(150),
+                          fontSize: 14,
+                        ),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
                   ),
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
-              child: TextFormField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  hintStyle: defaultFontStyle.copyWith(
-                    color: betterBlack.withAlpha(150),
-                    fontSize: 14,
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: authHorizontalPadding),
+                    child: TextFormField(
+                      validator: validatePassword,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        hintStyle: defaultFontStyle.copyWith(
+                          color: betterBlack.withAlpha(150),
+                          fontSize: 14,
+                        ),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
                   ),
-                  border: const OutlineInputBorder(),
-                ),
+                ],
               ),
             ),
             const SizedBox(height: 15),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (_formKey.currentState == null) return;
+                  if (!_formKey.currentState!.validate()) return;
+                  print("Passed: login");
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
                   shape: RoundedRectangleBorder(
@@ -189,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.pushReplacementNamed(context, '/register');
                   },
                   child: Text(
-                    ' Register here.',
+                    ' Register.',
                     style: defaultFontStyle.copyWith(color: Colors.lightBlue),
                   ),
                 ),
