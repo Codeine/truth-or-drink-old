@@ -81,7 +81,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 onPressed: () {
                   if (_formKey.currentState == null) return;
                   if (!_formKey.currentState!.validate()) return;
-                  print("Passed: registration");
+                  Navigator.pushNamed(context, '/verify-email');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
