@@ -10,7 +10,7 @@ class EmailVerificationPage extends StatelessWidget {
     bool redirectCanceled = false;
 
     // Simulate verification
-    Future.delayed(const Duration(seconds: 6), () {
+    Future.delayed(const Duration(seconds: 10), () {
       if (!redirectCanceled) {
         Navigator.pushReplacementNamed(context, '/main-menu');
       }
