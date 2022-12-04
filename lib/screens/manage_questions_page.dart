@@ -31,7 +31,7 @@ class _ManageQuestionsPageState extends State<ManageQuestionsPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: Text(
-                'Manage questions',
+                'Manage question sets',
                 style: defaultFontStyle.copyWith(
                   fontSize: 33,
                   fontWeight: FontWeight.w600,
@@ -43,7 +43,7 @@ class _ManageQuestionsPageState extends State<ManageQuestionsPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: Text(
-                'Your question sets',
+                'Your sets',
                 style: defaultFontStyle.copyWith(
                   fontSize: 20,
                 ),
@@ -65,7 +65,7 @@ class _ManageQuestionsPageState extends State<ManageQuestionsPage> {
                     color: betterBlack,
                   ),
                   title: Text(
-                    'Default question set',
+                    'Default questions',
                     style: defaultFontStyle.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -76,20 +76,25 @@ class _ManageQuestionsPageState extends State<ManageQuestionsPage> {
             Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: authHorizontalPadding - 5),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: const BorderSide(color: Colors.lightBlue)),
-                elevation: 2,
-                child: ListTile(
-                  trailing: Icon(
-                    Icons.delete,
-                    color: betterBlack,
-                  ),
-                  title: Text(
-                    'Custom set #1',
-                    style: defaultFontStyle.copyWith(
-                      fontWeight: FontWeight.w600,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/manage-question-set');
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: const BorderSide(color: Colors.lightBlue)),
+                  elevation: 2,
+                  child: ListTile(
+                    trailing: Icon(
+                      Icons.delete,
+                      color: betterBlack,
+                    ),
+                    title: Text(
+                      'Family friendly',
+                      style: defaultFontStyle.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -98,20 +103,25 @@ class _ManageQuestionsPageState extends State<ManageQuestionsPage> {
             Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: authHorizontalPadding - 5),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: const BorderSide(color: Colors.lightBlue)),
-                elevation: 2,
-                child: ListTile(
-                  trailing: Icon(
-                    Icons.delete,
-                    color: betterBlack,
-                  ),
-                  title: Text(
-                    'Custom set #2',
-                    style: defaultFontStyle.copyWith(
-                      fontWeight: FontWeight.w600,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/manage-question-set');
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: const BorderSide(color: Colors.lightBlue)),
+                  elevation: 2,
+                  child: ListTile(
+                    trailing: Icon(
+                      Icons.delete,
+                      color: betterBlack,
+                    ),
+                    title: Text(
+                      'Friends',
+                      style: defaultFontStyle.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
