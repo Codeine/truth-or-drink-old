@@ -1,21 +1,61 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:truth_or_drink/shared/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class EmailVerificationPage extends StatelessWidget {
+class EmailVerificationPage extends StatefulWidget {
   const EmailVerificationPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    bool redirectCanceled = false;
+  State<EmailVerificationPage> createState() => _EmailVerificationPageState();
+}
 
-    // Simulate verification
-    Future.delayed(const Duration(seconds: 10), () {
-      if (!redirectCanceled) {
-        Navigator.pushReplacementNamed(context, '/main-menu');
-      }
+class _EmailVerificationPageState extends State<EmailVerificationPage> {
+  bool isVerified = false;
+  Timer? timer;
+
+  Future sendVerificationEmail() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser!;
+      await user.sendEmailVerification();
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
+  Future checkEmailVerified() async {
+    await FirebaseAuth.instance.currentUser!.reload();
+    setState(() {
+      isVerified = FirebaseAuth.instance.currentUser!.emailVerified;
     });
+    if (isVerified) {
+      timer?.cancel();
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/');
+    }
+  }
 
+  @override
+  void initState() {
+    super.initState();
+    isVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+    if (!isVerified) {
+      sendVerificationEmail();
+      timer = Timer.periodic(
+          const Duration(seconds: 3), (timer) => checkEmailVerified());
+    }
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Base(
       child: Center(
         child: Column(
@@ -25,9 +65,8 @@ class EmailVerificationPage extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: BackButton(
-                onPressed: () {
-                  redirectCanceled = true;
-                  Navigator.pop(context);
+                onPressed: () async {
+                  FirebaseAuth.instance.signOut();
                 },
               ),
             ),

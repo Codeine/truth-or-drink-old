@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:truth_or_drink/shared/constants.dart';
 
-bool canShowSnackbar = true;
+void notifyUser(context, String text) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+        content: Text(
+          text,
+          style: defaultFontStyle.copyWith(
+            color: Colors.white,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: Colors.lightBlue),
+  );
+}
 
+bool canShowSnackbar = true;
 void notifyNotImplemented(context) {
   if (canShowSnackbar) {
     canShowSnackbar = false;
@@ -33,7 +46,7 @@ String? validateEmail(String? value) {
   if (value == null || value.isEmpty) {
     return 'Enter your email address';
   } else if (!isValidEmail(value)) {
-    return 'Enter a valid email address';
+    return 'Invalid email format';
   }
   return null;
 }
@@ -42,7 +55,7 @@ String? validatePassword(String? value) {
   if (value == null || value.isEmpty) {
     return 'Enter your password';
   } else if (value.length < 4) {
-    return 'Enter a valid password';
+    return 'Password is too short';
   }
   return null;
 }

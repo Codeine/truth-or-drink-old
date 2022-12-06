@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:truth_or_drink/screens/create_game_page.dart';
@@ -30,15 +31,58 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const LoginPage(),
-        '/register': (context) => const RegistrationPage(),
+        '/': (context) => const RegistrationWrapper(),
+        '/login': (context) => const LoginWrapper(),
         '/forgotten-password': (context) => const ForgottenPasswordPage(),
-        '/verify-email': (context) => const EmailVerificationPage(),
         '/main-menu': (context) => const MainMenuPage(),
         '/create-game': (context) => const CreateGamePage(),
         '/manage-questions': (context) => const ManageQuestionsPage(),
         '/manage-question-set': (context) => const ManageQuestionSetPage(),
         '/game': (context) => const GamePage(),
+      },
+    );
+  }
+}
+
+class RegistrationWrapper extends StatelessWidget {
+  const RegistrationWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (!snapshot.data!.emailVerified) {
+            return const EmailVerificationPage();
+          } else {
+            return const MainMenuPage();
+          }
+        } else {
+          return const RegistrationPage();
+        }
+      },
+    );
+  }
+}
+
+class LoginWrapper extends StatelessWidget {
+  const LoginWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (!snapshot.data!.emailVerified) {
+            return const EmailVerificationPage();
+          } else {
+            return const MainMenuPage();
+          }
+        } else {
+          return const LoginPage();
+        }
       },
     );
   }

@@ -67,7 +67,7 @@ class _ManageQuestionSetPageState extends State<ManageQuestionSetPage> {
                         Icons.edit_outlined,
                         color: betterBlack,
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Icon(
                         Icons.delete,
                         color: betterBlack,
@@ -99,7 +99,7 @@ class _ManageQuestionSetPageState extends State<ManageQuestionSetPage> {
                         Icons.edit_outlined,
                         color: betterBlack,
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Icon(
                         Icons.delete,
                         color: betterBlack,
@@ -131,7 +131,7 @@ class _ManageQuestionSetPageState extends State<ManageQuestionSetPage> {
                         Icons.edit_outlined,
                         color: betterBlack,
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Icon(
                         Icons.delete,
                         color: betterBlack,

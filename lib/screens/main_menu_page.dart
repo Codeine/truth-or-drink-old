@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:truth_or_drink/shared/constants.dart';
 
@@ -20,7 +21,7 @@ class MainMenuPage extends StatelessWidget {
                   color: Colors.lightBlue,
                 ),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/');
+                  FirebaseAuth.instance.signOut();
                 },
                 label: Text(
                   'Logout',

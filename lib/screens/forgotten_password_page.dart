@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:truth_or_drink/shared/constants.dart';
 import 'package:truth_or_drink/shared/features.dart';
@@ -10,6 +11,31 @@ class ForgottenPasswordPage extends StatefulWidget {
 }
 
 class _ForgottenPasswordPageState extends State<ForgottenPasswordPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Enter your email address';
+    } else if (!isValidEmail(value)) {
+      return 'Invalid email format';
+    }
+    return null;
+  }
+
+  void _resetPassword() async {
+    await FirebaseAuth.instance
+        .sendPasswordResetEmail(email: _emailController.text.trim());
+    if (!mounted) return;
+    notifyUser(context, 'Email sent.');
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Base(
@@ -42,14 +68,19 @@ class _ForgottenPasswordPageState extends State<ForgottenPasswordPage> {
             const SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                  hintStyle: defaultFontStyle.copyWith(
-                    color: betterBlack.withAlpha(150),
-                    fontSize: 14,
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: _emailController,
+                  validator: _validateEmail,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    hintStyle: defaultFontStyle.copyWith(
+                      color: betterBlack.withAlpha(150),
+                      fontSize: 14,
+                    ),
+                    border: const OutlineInputBorder(),
                   ),
-                  border: const OutlineInputBorder(),
                 ),
               ),
             ),
@@ -58,7 +89,8 @@ class _ForgottenPasswordPageState extends State<ForgottenPasswordPage> {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
                 onPressed: () {
-                  notifyNotImplemented(context);
+                  if (!_formKey.currentState!.validate()) return;
+                  _resetPassword();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:truth_or_drink/shared/constants.dart';
 import 'package:truth_or_drink/shared/features.dart';
@@ -11,6 +12,59 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  bool _userNotFound = false;
+  bool _wrongPassword = false;
+
+  String? _validateEmail(String? value) {
+    if (_userNotFound) {
+      _userNotFound = false;
+      return 'This email has not been registered';
+    } else if (value == null || value.isEmpty) {
+      return 'Enter your email address';
+    } else if (!isValidEmail(value)) {
+      return 'Invalid email format';
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (_wrongPassword) {
+      _wrongPassword = false;
+      return 'Incorrect password';
+    } else if (value == null || value.isEmpty) {
+      return 'Enter your password';
+    } else if (value.length < 4) {
+      return 'Password is too short';
+    }
+    return null;
+  }
+
+  void _signIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        _userNotFound = true;
+      } else if (e.code == 'wrong-password') {
+        _wrongPassword = true;
+      }
+      _formKey.currentState!.validate();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +96,8 @@ class _LoginPageState extends State<LoginPage> {
                     padding:
                         EdgeInsets.symmetric(horizontal: authHorizontalPadding),
                     child: TextFormField(
-                      validator: validateEmail,
+                      controller: _emailController,
+                      validator: _validateEmail,
                       decoration: InputDecoration(
                         hintText: 'Email',
                         hintStyle: defaultFontStyle.copyWith(
@@ -58,7 +113,8 @@ class _LoginPageState extends State<LoginPage> {
                     padding:
                         EdgeInsets.symmetric(horizontal: authHorizontalPadding),
                     child: TextFormField(
-                      validator: validatePassword,
+                      controller: _passwordController,
+                      validator: _validatePassword,
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Password',
@@ -78,9 +134,8 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState == null) return;
                   if (!_formKey.currentState!.validate()) return;
-                  Navigator.pushReplacementNamed(context, '/main-menu');
+                  _signIn();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
@@ -185,7 +240,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, '/register');
+                    Navigator.pushReplacementNamed(context, '/');
                   },
                   child: Text(
                     ' Register.',

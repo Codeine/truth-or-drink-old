@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:truth_or_drink/shared/constants.dart';
 import 'package:truth_or_drink/shared/features.dart';
 
@@ -11,6 +13,75 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  bool _weakPassword = false;
+  bool _emailInUse = false;
+
+  String? _validateEmail(String? value) {
+    if (_emailInUse) {
+      _emailInUse = false;
+      return 'This email address is already in use';
+    } else if (value == null || value.isEmpty) {
+      return 'Enter your email address';
+    } else if (!isValidEmail(value)) {
+      return 'Invalid email format';
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (_weakPassword) {
+      _weakPassword = false;
+      return 'Password is too weak';
+    } else if (value == null || value.isEmpty) {
+      return 'Enter your password';
+    } else if (value.length < 4) {
+      return 'Password is too short';
+    }
+    return null;
+  }
+
+  void _signUp() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        _weakPassword = true;
+      } else if (e.code == 'email-already-in-use') {
+        _emailInUse = true;
+      }
+      _formKey.currentState!.validate();
+    } catch (e) {}
+  }
+
+  Future _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +113,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     padding:
                         EdgeInsets.symmetric(horizontal: authHorizontalPadding),
                     child: TextFormField(
-                      validator: validateEmail,
+                      controller: _emailController,
+                      validator: _validateEmail,
                       decoration: InputDecoration(
                         hintText: 'Email',
                         hintStyle: defaultFontStyle.copyWith(
@@ -58,7 +130,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     padding:
                         EdgeInsets.symmetric(horizontal: authHorizontalPadding),
                     child: TextFormField(
-                      validator: validatePassword,
+                      controller: _passwordController,
+                      validator: _validatePassword,
                       obscureText: true,
                       decoration: InputDecoration(
                         suffixIcon: const Icon(Icons.visibility),
@@ -79,9 +152,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState == null) return;
                   if (!_formKey.currentState!.validate()) return;
-                  Navigator.pushNamed(context, '/verify-email');
+                  _signUp();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
@@ -116,7 +188,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: OutlinedButton.icon(
                 onPressed: () {
-                  notifyNotImplemented(context);
+                  _signInWithGoogle();
                 },
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 10),
@@ -168,7 +240,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, '/');
+                    Navigator.pushReplacementNamed(context, '/login');
                   },
                   child: Text(
                     ' Sign in.',
