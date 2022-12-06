@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "133333730533-e6tkph5lsglpt9lfi1g37lb7111m78fu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.truth_or_drink",
+            "certificate_hash": "8a0a0ea9a561228076a80088453a46fb169e9646"
+          }
+        },
+        {
           "client_id": "133333730533-vd96ngmm7s6a17720brdk57t0gj85k0r.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "133333730533-vd96ngmm7s6a17720brdk57t0gj85k0r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "133333730533-04avq2ba3jip5ao37hnuhghnlao4do48.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.truthOrDrink"
+              }
             }
           ]
         }

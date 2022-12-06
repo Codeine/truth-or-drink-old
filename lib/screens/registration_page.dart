@@ -18,6 +18,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   bool _weakPassword = false;
   bool _emailInUse = false;
+  bool _passwordInvisible = true;
 
   String? _validateEmail(String? value) {
     if (_emailInUse) {
@@ -57,23 +58,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
       }
       _formKey.currentState!.validate();
     } catch (e) {}
-  }
-
-  Future _signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-
-      return await FirebaseAuth.instance.signInWithCredential(credential);
-    } on Exception catch (e) {
-      print(e);
-    }
   }
 
   @override
@@ -132,9 +116,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     child: TextFormField(
                       controller: _passwordController,
                       validator: _validatePassword,
-                      obscureText: true,
+                      obscureText: _passwordInvisible,
                       decoration: InputDecoration(
-                        suffixIcon: const Icon(Icons.visibility),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _passwordInvisible = !_passwordInvisible;
+                            });
+                          },
+                          child: Icon(_passwordInvisible
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        ),
                         hintText: 'Password',
                         hintStyle: defaultFontStyle.copyWith(
                           color: betterBlack.withAlpha(150),
@@ -187,9 +180,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: OutlinedButton.icon(
-                onPressed: () {
-                  _signInWithGoogle();
-                },
+                onPressed: signInWithGoogle,
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                 ),

@@ -187,9 +187,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: OutlinedButton.icon(
-                onPressed: () {
-                  notifyNotImplemented(context);
-                },
+                onPressed: signInWithGoogle,
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                 ),

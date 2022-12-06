@@ -10,6 +10,7 @@ import 'package:truth_or_drink/screens/main_menu_page.dart';
 import 'package:truth_or_drink/screens/manage_question_set_page.dart';
 import 'package:truth_or_drink/screens/manage_questions_page.dart';
 import 'package:truth_or_drink/screens/registration_page.dart';
+import 'package:truth_or_drink/screens/set_display_name_page.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const RegistrationWrapper(),
         '/login': (context) => const LoginWrapper(),
         '/forgotten-password': (context) => const ForgottenPasswordPage(),
+        '/set-display-name': (context) => const SetDisplayNamePage(),
         '/main-menu': (context) => const MainMenuPage(),
         '/create-game': (context) => const CreateGamePage(),
         '/manage-questions': (context) => const ManageQuestionsPage(),
@@ -55,6 +57,8 @@ class RegistrationWrapper extends StatelessWidget {
         if (snapshot.hasData) {
           if (!snapshot.data!.emailVerified) {
             return const EmailVerificationPage();
+          } else if (snapshot.data!.displayName == null) {
+            return const SetDisplayNamePage();
           } else {
             return const MainMenuPage();
           }
@@ -77,6 +81,8 @@ class LoginWrapper extends StatelessWidget {
         if (snapshot.hasData) {
           if (!snapshot.data!.emailVerified) {
             return const EmailVerificationPage();
+          } else if (snapshot.data!.displayName == null) {
+            return const SetDisplayNamePage();
           } else {
             return const MainMenuPage();
           }

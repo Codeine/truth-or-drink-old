@@ -2,14 +2,41 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:truth_or_drink/shared/constants.dart';
 
-class MainMenuPage extends StatelessWidget {
-  const MainMenuPage({super.key});
+class SetDisplayNamePage extends StatefulWidget {
+  const SetDisplayNamePage({super.key});
+
+  @override
+  State<SetDisplayNamePage> createState() => _SetDisplayNamePageState();
+}
+
+class _SetDisplayNamePageState extends State<SetDisplayNamePage> {
+  final _formKey = GlobalKey<FormState>();
+  final _displayNameController = TextEditingController();
+
+  String? _validateDisplayName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Enter your display name';
+    } else if (value.length < 3) {
+      return 'Your display name is too short';
+    }
+    return null;
+  }
+
+  void _saveDisplayName() async {
+    await FirebaseAuth.instance.currentUser!
+        .updateDisplayName(_displayNameController.text.trim());
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, '/');
+  }
+
+  @override
+  void dispose() {
+    _displayNameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    String? name = FirebaseAuth.instance.currentUser!.displayName ?? '';
-    String? email = FirebaseAuth.instance.currentUser!.email ?? '';
-
     return Base(
       child: Center(
         child: Column(
@@ -17,22 +44,11 @@ class MainMenuPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Align(
-              alignment: Alignment.topLeft,
-              child: TextButton.icon(
-                icon: const Icon(
-                  Icons.logout,
-                  color: Colors.lightBlue,
-                ),
+              alignment: Alignment.centerLeft,
+              child: BackButton(
                 onPressed: () {
-                  FirebaseAuth.instance.signOut();
+                  Navigator.pop(context);
                 },
-                label: Text(
-                  'Logout',
-                  style: defaultFontStyle.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.lightBlue,
-                  ),
-                ),
               ),
             ),
             const Logo(width: 125.0),
@@ -40,7 +56,7 @@ class MainMenuPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: Text(
-                'What would you like to do?',
+                'Enter your display name',
                 style: defaultFontStyle.copyWith(
                   fontSize: 33,
                   fontWeight: FontWeight.w600,
@@ -48,27 +64,21 @@ class MainMenuPage extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/create-game');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.lightBlue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: defaultBorderRadius,
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  elevation: 1,
-                ),
-                child: Text(
-                  'Create a New Game',
-                  style: defaultFontStyle.copyWith(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: _displayNameController,
+                  validator: _validateDisplayName,
+                  decoration: InputDecoration(
+                    hintText: 'Display name',
+                    hintStyle: defaultFontStyle.copyWith(
+                      color: betterBlack.withAlpha(150),
+                      fontSize: 14,
+                    ),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
               ),
@@ -78,21 +88,22 @@ class MainMenuPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/manage-questions');
+                  if (!_formKey.currentState!.validate()) return;
+                  _saveDisplayName();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
                   shape: RoundedRectangleBorder(
                     borderRadius: defaultBorderRadius,
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   elevation: 1,
                 ),
                 child: Text(
-                  'Edit Questions',
+                  'Continue',
                   style: defaultFontStyle.copyWith(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -101,7 +112,7 @@ class MainMenuPage extends StatelessWidget {
             const SizedBox(height: 40),
             TextDivider(
               text: Text(
-                'TIP',
+                'WHAT IS THIS FOR?',
                 style: defaultFontStyle.copyWith(
                   color: betterBlack.withAlpha(175),
                 ),
@@ -112,23 +123,11 @@ class MainMenuPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: Text(
-                'Did you know that shaking your phone does the same as pressing the drink button?',
+                'This will be the username you go by.',
                 style: defaultFontStyle,
                 textAlign: TextAlign.center,
               ),
             ),
-            Expanded(child: Container()),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, bottom: 10.0),
-              child: Text(
-                '$name\n$email',
-                style: defaultFontStyle.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            )
           ],
         ),
       ),
