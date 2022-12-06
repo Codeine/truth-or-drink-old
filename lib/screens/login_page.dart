@@ -204,31 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 5),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
-              child: TextButton.icon(
-                onPressed: () {
-                  notifyNotImplemented(context);
-                },
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  backgroundColor: facebookBlue,
-                ),
-                icon: Image.asset(
-                  'assets/facebook.png',
-                  width: 20,
-                ),
-                label: Text(
-                  'Sign in with Facebook',
-                  style: defaultFontStyle.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30.0),
+            const SizedBox(height: 50.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
