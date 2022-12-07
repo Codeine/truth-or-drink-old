@@ -78,7 +78,7 @@ class MainMenuPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/manage-questions');
+                  Navigator.pushNamed(context, '/manage-bundles');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
@@ -89,7 +89,7 @@ class MainMenuPage extends StatelessWidget {
                   elevation: 1,
                 ),
                 child: Text(
-                  'Edit Questions',
+                  'Manage Bundles',
                   style: defaultFontStyle.copyWith(
                     color: Colors.white,
                     fontSize: 18,
@@ -124,7 +124,7 @@ class MainMenuPage extends StatelessWidget {
                 '$name\n$email',
                 style: defaultFontStyle.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: Colors.grey,
+                  color: logoBlue,
                 ),
                 textAlign: TextAlign.left,
               ),

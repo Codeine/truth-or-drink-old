@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:truth_or_drink/shared/constants.dart';
 import 'package:truth_or_drink/shared/features.dart';
@@ -118,7 +119,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
               child: TextFormField(
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintText: 'Player 1\'s name',
+                  hintText: FirebaseAuth.instance.currentUser!.displayName,
                   hintStyle: defaultFontStyle.copyWith(
                     color: betterBlack.withAlpha(150),
                     fontSize: 14,

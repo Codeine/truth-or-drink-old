@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:truth_or_drink/shared/constants.dart';
+import 'package:truth_or_drink/shared/features.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -127,7 +128,7 @@ class _GamePageState extends State<GamePage> {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/game');
+                  notifyNotImplemented(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromARGB(255, 156, 39, 176),
@@ -152,7 +153,7 @@ class _GamePageState extends State<GamePage> {
               padding: EdgeInsets.symmetric(horizontal: authHorizontalPadding),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/game');
+                  notifyNotImplemented(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromARGB(255, 244, 67, 64),

@@ -18,6 +18,8 @@ class _SetDisplayNamePageState extends State<SetDisplayNamePage> {
       return 'Enter your display name';
     } else if (value.length < 3) {
       return 'Your display name is too short';
+    } else if (value.length > 20) {
+      return 'Your display name is too long';
     }
     return null;
   }
