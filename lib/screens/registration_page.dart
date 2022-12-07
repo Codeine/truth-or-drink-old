@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:truth_or_drink/shared/constants.dart';
 import 'package:truth_or_drink/shared/features.dart';
 
@@ -57,7 +56,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
         _emailInUse = true;
       }
       _formKey.currentState!.validate();
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override

@@ -14,7 +14,7 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     bool ttsEnabled = false;
 
-    void _showSettings() {
+    void showSettings() {
       showModalBottomSheet(
           context: context,
           builder: (context) {
@@ -89,7 +89,7 @@ class _GamePageState extends State<GamePage> {
                       Icons.settings,
                       color: betterBlack,
                     ),
-                    onPressed: _showSettings,
+                    onPressed: showSettings,
                     label: Text(
                       'Settings',
                       style: defaultFontStyle.copyWith(
@@ -101,7 +101,7 @@ class _GamePageState extends State<GamePage> {
                 ],
               ),
             ),
-            Logo(width: 125),
+            const Logo(width: 125),
             const SizedBox(height: 90.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -131,7 +131,7 @@ class _GamePageState extends State<GamePage> {
                   notifyNotImplemented(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 156, 39, 176),
+                  backgroundColor: const Color.fromARGB(255, 156, 39, 176),
                   shape: RoundedRectangleBorder(
                     borderRadius: defaultBorderRadius,
                   ),
@@ -156,7 +156,7 @@ class _GamePageState extends State<GamePage> {
                   notifyNotImplemented(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 244, 67, 64),
+                  backgroundColor: const Color.fromARGB(255, 244, 67, 64),
                   shape: RoundedRectangleBorder(
                     borderRadius: defaultBorderRadius,
                   ),
