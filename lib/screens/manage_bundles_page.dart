@@ -8,12 +8,13 @@ class Bundles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection("sets").snapshots(),
+      stream: FirebaseFirestore.instance.collection("bundles").snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const Text('No data');
+          return const NoBundlesYet();
+        } else if (snapshot.data!.docs.isEmpty) {
+          return const NoBundlesYet();
         }
-        //Text(snapshot.data!.docs[index]['name']);
         return ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: 0,
@@ -33,9 +34,20 @@ class Bundles extends StatelessWidget {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.list, color: betterBlack),
-                      const SizedBox(width: 20),
-                      Icon(Icons.delete, color: betterBlack),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.list, color: betterBlack),
+                      ),
+                      const SizedBox(width: 10),
+                      IconButton(
+                        onPressed: () {
+                          FirebaseFirestore.instance
+                              .collection("bundles")
+                              .doc(snapshot.data!.docs[index].id)
+                              .delete();
+                        },
+                        icon: Icon(Icons.delete, color: betterBlack),
+                      ),
                     ],
                   ),
                   title: Text(
@@ -50,6 +62,27 @@ class Bundles extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class NoBundlesYet extends StatelessWidget {
+  const NoBundlesYet({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30),
+      child: Center(
+        child: Text(
+          "You have not created any bundles yet.",
+          style: defaultFontStyle.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -107,7 +140,7 @@ class _ManageBundlesPageState extends State<ManageBundlesPage> {
                   EdgeInsets.symmetric(horizontal: authHorizontalPadding - 5),
               child: const Bundles(),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 130),
               child: ElevatedButton.icon(
