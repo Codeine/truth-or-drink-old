@@ -1,5 +1,5 @@
 
-# Truth or Drink
+# Truth or Drink (old)
 A new Flutter project with Firebase as backend for Mobile Applications (B2C4-2022). 
 
 
